@@ -2,10 +2,37 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Pinheiro Acai</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
+/* TOUCH OTIMIZADO */
+*{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;touch-action:manipulation}
+input,textarea{-webkit-user-select:text;user-select:text;touch-action:manipulation}
+button,.btn,.tecla,.pag-item,.pc,.tab,.ni{
+  cursor:pointer;
+  min-height:44px;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+button:active,.btn:active,.tecla:active,.pag-item:active,.pc:active{
+  transform:scale(.96);
+  opacity:.85;
+  transition:all .1s;
+}
+/* Aumentar areas de toque */
+.tecla{min-height:56px}
+.btn{min-height:50px;font-size:1rem}
+input[type=text],input[type=tel],input[type=number],.inp{
+  min-height:50px;
+  font-size:17px;
+}
+/* Prevenir zoom em inputs */
+select,input,textarea{font-size:16px!important}
+
 *{margin:0;padding:0;box-sizing:border-box}
 input,button{-webkit-appearance:none;appearance:none;font-family:inherit}
 body{font-family:Poppins,sans-serif;min-height:100vh;background:linear-gradient(160deg,#4a0880,#6A0DAD,#9B3DD6);display:flex;align-items:center;justify-content:center;padding:16px}
@@ -583,6 +610,29 @@ function novaCompra(){
   eHide("p1Erro");eHide("p2Erro");eHide("p3Erro");
   irPg(1);
 }
+</script>
+
+<script>
+// Touch support - converter touch em click para todos elementos interativos
+document.addEventListener("DOMContentLoaded", function() {
+  // Prevenir delay de 300ms em todos os toques
+  document.addEventListener("touchstart", function(){}, {passive:true});
+  
+  // Adicionar feedback visual em toque
+  document.addEventListener("touchstart", function(e) {
+    var el = e.target;
+    while(el && el !== document.body) {
+      if(el.tagName === "BUTTON" || el.classList.contains("pag-item") || 
+         el.classList.contains("pc") || el.classList.contains("tecla") ||
+         el.classList.contains("tab") || el.classList.contains("ni")) {
+        el.style.opacity = "0.7";
+        setTimeout(function(){ el.style.opacity = ""; }, 150);
+        break;
+      }
+      el = el.parentElement;
+    }
+  }, {passive:true});
+});
 </script>
 </body>
 </html>
